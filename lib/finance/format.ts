@@ -27,6 +27,11 @@ export function formatDecimal(value: number, places: number): string {
   }).format(value);
 }
 
+/** Up to `maxPlaces` decimals, trailing zeros dropped: 0.0070833, 1.01. */
+export function formatTrimmed(value: number, maxPlaces: number): string {
+  return new Intl.NumberFormat("en-IN", { maximumFractionDigits: maxPlaces }).format(value);
+}
+
 /**
  * Short form for tight spaces: ₹1.65 Cr, ₹45.2 L, ₹9,650.
  * Crore keeps two decimals, lakh one; below a lakh, the full figure.
