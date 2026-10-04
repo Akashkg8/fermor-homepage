@@ -53,8 +53,7 @@ export function sipFutureValue({ monthly, annualRate, years }: SipInput): SipRes
   const monthlyRate = annualRate / 12 / 100;
   const growthFactor = Math.pow(1 + monthlyRate, months);
   // At 0% the bracket is 0/0; its limit is n and the (1 + i) term is 1.
-  const multiplier =
-    monthlyRate === 0 ? months : ((growthFactor - 1) / monthlyRate) * (1 + monthlyRate);
+  const multiplier = monthlyRate === 0 ? months : ((growthFactor - 1) / monthlyRate) * (1 + monthlyRate);
 
   const futureValue = monthly * multiplier;
   const invested = monthly * months;

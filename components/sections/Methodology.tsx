@@ -7,25 +7,25 @@ const check = emi({ principal: 10_00_000, annualRate: 10, years: 20 });
 
 export function Methodology() {
   return (
-    <section aria-labelledby="method-title" className="section border-t border-rule">
-      <div className="wrap grid grid-1 gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+    <section aria-labelledby="method-title" className="section border-rule border-t">
+      <div className="wrap grid-1 grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         <div className="prose-col">
           <h2 id="method-title">Every formula, every assumption</h2>
-          <p className="mt-5 text-[1.0625rem] text-ink-soft">
+          <p className="text-ink-soft mt-5 text-[1.0625rem]">
             If you keep your own spreadsheet, you should be able to rebuild any Fermor number from what is on the page.
             Here is the EMI calculator, in full.
           </p>
           <dl className="mt-8 grid gap-6">
             <div>
               <dt className="font-bold">It runs in your browser</dt>
-              <dd className="mt-1 text-ink-soft">
+              <dd className="text-ink-soft mt-1">
                 The arithmetic happens on your device as you type. Nothing you enter is sent anywhere unless you choose
                 to save a result to an account.
               </dd>
             </div>
             <div>
               <dt className="font-bold">Tax rules carry a date</dt>
-              <dd className="mt-1 text-ink-soft">
+              <dd className="text-ink-soft mt-1">
                 Slabs, rebates and cess change with each Budget. A tax calculator should say which year&apos;s rules it
                 applies. This concept assumes {SITE.taxYear}; you can check any slab against the Income Tax
                 Department&apos;s published rates at incometax.gov.in.
@@ -33,7 +33,7 @@ export function Methodology() {
             </div>
             <div>
               <dt className="font-bold">Edge cases are handled, not hidden</dt>
-              <dd className="mt-1 text-ink-soft">
+              <dd className="text-ink-soft mt-1">
                 A 0% rate, a one-month tenure and out-of-range input each have a defined answer, and the same unit tests
                 check them.
               </dd>
@@ -41,14 +41,14 @@ export function Methodology() {
           </dl>
         </div>
 
-        <div className="rough self-start rounded-[0] border border-rule text-[0.9375rem]">
+        <div className="rough border-rule self-start rounded-[0] border text-[0.9375rem]">
           <p className="rough-label">
             EMI calculator, method ·{" "}
             <a href={calc("emi-calculator")} className="link not-italic">
               open it
             </a>
           </p>
-          <ol className="list-decimal pl-6 marker:text-graphite">
+          <ol className="marker:text-graphite list-decimal pl-6">
             <li>Monthly rate: r = annual rate ÷ 12 ÷ 100</li>
             <li>Instalments: n = years × 12</li>
             <li>EMI = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1)</li>

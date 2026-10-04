@@ -3,10 +3,7 @@
 import { useId, useState } from "react";
 
 type State =
-  | { kind: "idle" }
-  | { kind: "sending" }
-  | { kind: "done"; stored: boolean }
-  | { kind: "error"; message: string };
+  { kind: "idle" } | { kind: "sending" } | { kind: "done"; stored: boolean } | { kind: "error"; message: string };
 
 export function WaitlistForm({ connected }: { connected: boolean }) {
   const id = useId();
@@ -41,9 +38,9 @@ export function WaitlistForm({ connected }: { connected: boolean }) {
 
   if (state.kind === "done") {
     return (
-      <div role="status" className="rounded-[var(--radius-container)] border border-on-ink-muted/40 p-5">
+      <div role="status" className="border-on-ink-muted/40 rounded-[var(--radius-container)] border p-5">
         <p className="text-lead font-semibold">You&apos;re on the list.</p>
-        <p className="mt-1 text-on-ink-muted">
+        <p className="text-on-ink-muted mt-1">
           {state.stored
             ? "We'll email you once when the app opens, with your health check link. Nothing else."
             : "Your address checked out. This concept build doesn't store it, so you won't be emailed."}
@@ -71,7 +68,7 @@ export function WaitlistForm({ connected }: { connected: boolean }) {
           placeholder="you@example.com"
           aria-invalid={state.kind === "error" || undefined}
           aria-describedby={state.kind === "error" ? errId : undefined}
-          className="min-h-12 flex-1 rounded-[var(--radius-control)] border border-on-ink-muted/60 bg-ink-soft px-3 text-on-ink placeholder:text-on-ink-muted/80 focus-visible:border-on-ink"
+          className="border-on-ink-muted/60 bg-ink-soft text-on-ink placeholder:text-on-ink-muted/80 focus-visible:border-on-ink min-h-12 flex-1 rounded-[var(--radius-control)] border px-3"
         />
         <button type="submit" className="btn btn-on-ink min-h-12" disabled={state.kind === "sending"}>
           {state.kind === "sending" ? "Adding you…" : "Get my health check"}
@@ -84,7 +81,7 @@ export function WaitlistForm({ connected }: { connected: boolean }) {
           <input name="company" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
-      <label className="flex items-start gap-3 text-[0.9375rem] text-on-ink-muted">
+      <label className="text-on-ink-muted flex items-start gap-3 text-[0.9375rem]">
         <input name="consent" type="checkbox" required className="mt-1 size-5 shrink-0 accent-[var(--color-on-ink)]" />
         <span id={`${id}-consent-text`}>
           Email me when the app opens, with my free health check. Only about the app; unsubscribe in one click; never
@@ -92,9 +89,7 @@ export function WaitlistForm({ connected }: { connected: boolean }) {
         </span>
       </label>
       {!connected && (
-        <p className="text-note text-on-ink-muted italic">
-          Concept build: the address is validated but not stored.
-        </p>
+        <p className="text-note text-on-ink-muted italic">Concept build: the address is validated but not stored.</p>
       )}
       <p id={errId} role="alert" className="min-h-[1.5em] text-[0.9375rem] text-[#ffb4a8]">
         {state.kind === "error" ? state.message : ""}

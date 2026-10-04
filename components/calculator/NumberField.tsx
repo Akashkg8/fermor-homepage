@@ -68,7 +68,7 @@ export function NumberField({
           {prefix ? (
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute top-1/2 left-2.5 -translate-y-1/2 text-graphite"
+              className="text-graphite pointer-events-none absolute top-1/2 left-2.5 -translate-y-1/2"
             >
               {prefix}
             </span>
@@ -103,7 +103,7 @@ export function NumberField({
           {suffix ? (
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute top-1/2 right-2.5 -translate-y-1/2 text-note text-graphite"
+              className="text-note text-graphite pointer-events-none absolute top-1/2 right-2.5 -translate-y-1/2"
             >
               {suffix}
             </span>
@@ -125,7 +125,7 @@ export function NumberField({
           onChange(snapToStep(Number(e.target.value), min, step));
         }}
       />
-      <p id={errorId} role="alert" className={`-mt-1 text-note text-loss ${error ? "" : "hidden"}`}>
+      <p id={errorId} role="alert" className={`text-note text-loss -mt-1 ${error ? "" : "hidden"}`}>
         Enter a number between {display(min, decimals)} and {display(max, decimals)}.
       </p>
     </div>

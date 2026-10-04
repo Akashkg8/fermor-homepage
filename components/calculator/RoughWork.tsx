@@ -56,8 +56,7 @@ export function SipWorking({ r }: { r: SipResult }) {
       </Line>
       <p className="rough-note mt-1 whitespace-normal">
         Illustrative. Assumes a constant {formatTrimmed(r.annualRate, 2)}% a year, compounded monthly, with each
-        instalment paid at the start of the month. Market returns vary year to year; this is arithmetic, not a
-        forecast.
+        instalment paid at the start of the month. Market returns vary year to year; this is arithmetic, not a forecast.
       </p>
     </div>
   );
@@ -98,8 +97,8 @@ export function EmiWorking({ r }: { r: EmiResult }) {
         Interest = EMI × n − P = <Term value={formatINR(r.totalInterest)} order={5} />
       </Line>
       <p className="rough-note mt-1 whitespace-normal">
-        Illustrative. Assumes the rate stays at {formatTrimmed(r.annualRate, 2)}% for the full term, monthly rests
-        and no prepayment. Floating rates move with the lender&apos;s benchmark.
+        Illustrative. Assumes the rate stays at {formatTrimmed(r.annualRate, 2)}% for the full term, monthly rests and
+        no prepayment. Floating rates move with the lender&apos;s benchmark.
       </p>
     </div>
   );

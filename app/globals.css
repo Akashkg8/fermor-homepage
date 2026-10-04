@@ -20,8 +20,7 @@
   --color-on-ink: #e9eef5;
   --color-on-ink-muted: #a9b4c4;
 
-  --font-sans:
-    var(--font-schibsted), var(--font-devanagari), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-schibsted), var(--font-devanagari), ui-sans-serif, system-ui, sans-serif;
 
   --text-note: 0.8125rem;
   --text-note--line-height: 1.45;
@@ -55,6 +54,13 @@
     line-height: 1.6;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+  }
+  /* next/font names each face separately, so italics opt into the italic file. */
+  em,
+  i,
+  .italic,
+  .rough-note {
+    font-family: var(--font-schibsted-italic), var(--font-sans);
   }
   h1,
   h2,
@@ -251,11 +257,7 @@
   .range::-webkit-slider-runnable-track {
     height: 4px;
     border-radius: 2px;
-    background: linear-gradient(
-      to right,
-      var(--color-accent) 0 var(--fill),
-      var(--color-rule) var(--fill) 100%
-    );
+    background: linear-gradient(to right, var(--color-accent) 0 var(--fill), var(--color-rule) var(--fill) 100%);
   }
   .range::-moz-range-track {
     height: 4px;
@@ -317,6 +319,38 @@
   /* Hairline-ruled list rows (calculator index, articles). */
   .ruled > * + * {
     border-top: 1px solid var(--color-rule);
+  }
+}
+
+/* Rough-work term underline: draws in, then fades. Opacity 0 at rest, so the
+   first paint and reduced-motion users see no mark at all. */
+@keyframes term-draw {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  35% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+.term-mark {
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--color-accent);
+  transform-origin: left;
+  opacity: 0;
+  animation: term-draw 900ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .term-mark {
+    animation: none;
   }
 }
 

@@ -1,13 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { amortiseByYear, emi } from "./emi";
-import {
-  clamp,
-  formatINR,
-  formatINRShort,
-  formatINRSpoken,
-  parseNumericInput,
-  snapToStep,
-} from "./format";
+import { clamp, formatINR, formatINRShort, formatINRSpoken, parseNumericInput, snapToStep } from "./format";
 import { sipForGoal, sipFutureValue } from "./sip";
 
 describe("sipFutureValue", () => {

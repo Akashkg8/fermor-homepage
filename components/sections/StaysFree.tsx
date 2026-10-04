@@ -16,20 +16,16 @@ const IS_NOT = [
 
 export function StaysFree() {
   return (
-    <section
-      id="how-fermor-stays-free"
-      aria-labelledby="free-title"
-      className="section border-t border-rule bg-paper"
-    >
+    <section id="how-fermor-stays-free" aria-labelledby="free-title" className="section border-rule bg-paper border-t">
       <div className="wrap">
         <div className="prose-col">
           <h2 id="free-title">How Fermor stays free</h2>
-          <p className="mt-4 text-[1.0625rem] text-ink-soft">
+          <p className="text-ink-soft mt-4 text-[1.0625rem]">
             Everything on Fermor is for education and information. Here is how it is paid for, and what it is not.
           </p>
         </div>
 
-        <div className="mt-10 grid border-y border-ink md:grid-cols-2">
+        <div className="border-ink mt-10 grid border-y md:grid-cols-2">
           <div className="py-6 md:pr-10">
             <h3 className="text-[1.25rem] font-bold">How Fermor earns</h3>
             <dl className="ruled mt-4">
@@ -41,7 +37,7 @@ export function StaysFree() {
               ))}
             </dl>
           </div>
-          <div className="border-t border-rule py-6 md:border-t-0 md:border-l md:pl-10">
+          <div className="border-rule border-t py-6 md:border-t-0 md:border-l md:pl-10">
             <h3 className="text-[1.25rem] font-bold">What Fermor is not</h3>
             <ul className="ruled mt-4">
               {IS_NOT.map((t) => (
@@ -56,9 +52,10 @@ export function StaysFree() {
           </div>
         </div>
 
-        <p className="mt-6 max-w-[65ch] text-ink-soft">
+        <p className="text-ink-soft mt-6 max-w-[65ch]">
           <strong className="text-ink">Your inputs stay on your device.</strong> Calculations run in your browser, and
-          nothing is stored unless you choose to save a result. Decisions, and any advice you want on them, stay with you.
+          nothing is stored unless you choose to save a result. Decisions, and any advice you want on them, stay with
+          you.
         </p>
       </div>
     </section>

@@ -8,6 +8,7 @@ import { calc } from "@/content/site";
 import { AnimatedNumber } from "./AnimatedNumber";
 import { NumberField } from "./NumberField";
 import { EmiWorking, SipWorking } from "./RoughWork";
+import { InteractedContext } from "./Term";
 
 type Mode = "sip" | "emi";
 
@@ -41,11 +42,14 @@ function Split({
   const aPct = total > 0 ? (a / total) * 100 : 100;
   return (
     <div aria-hidden="true" className="mt-4">
-      <div className="flex h-2 overflow-hidden rounded-[2px] bg-rule">
-        <div className="bg-graphite transition-[width] duration-300 ease-out motion-reduce:transition-none" style={{ width: `${aPct}%` }} />
+      <div className="bg-rule flex h-2 overflow-hidden rounded-[2px]">
+        <div
+          className="bg-graphite transition-[width] duration-300 ease-out motion-reduce:transition-none"
+          style={{ width: `${aPct}%` }}
+        />
         <div className={`flex-1 ${bClass}`} />
       </div>
-      <div className="mt-1.5 flex justify-between text-note text-graphite">
+      <div className="text-note text-graphite mt-1.5 flex justify-between">
         <span>{aLabel}</span>
         <span>{bLabel}</span>
       </div>
@@ -58,6 +62,7 @@ export function HeroCalculator() {
   const [sip, setSip] = useState({ monthly: 25_000, annualRate: 12, years: 15 });
   const [loan, setLoan] = useState({ principal: 50_00_000, annualRate: 8.5, years: 20 });
   const [showWorking, setShowWorking] = useState(false);
+  const [interacted, setInteracted] = useState(false);
 
   const sipR = useMemo(() => sipFutureValue(sip), [sip]);
   const emiR = useMemo(() => emi(loan), [loan]);
@@ -74,9 +79,10 @@ export function HeroCalculator() {
     <Tabs.Root
       value={mode}
       onValueChange={(v) => setMode(v as Mode)}
-      className="overflow-hidden rounded-[var(--radius-container)] border border-rule bg-paper shadow-[0_1px_0_rgb(21_34_56/0.04),0_12px_32px_-18px_rgb(21_34_56/0.25)]"
+      onInput={() => setInteracted(true)}
+      className="border-rule bg-paper overflow-hidden rounded-[var(--radius-container)] border shadow-[0_1px_0_rgb(21_34_56/0.04),0_12px_32px_-18px_rgb(21_34_56/0.25)]"
     >
-      <div className="flex flex-wrap items-end justify-between gap-x-4 border-b border-rule px-4 pt-3 md:px-5">
+      <div className="border-rule flex flex-wrap items-end justify-between gap-x-4 border-b px-4 pt-3 md:px-5">
         <Tabs.List aria-label="Choose a calculation" className="flex gap-1">
           {(
             [
@@ -87,7 +93,7 @@ export function HeroCalculator() {
             <Tabs.Trigger
               key={value}
               value={value}
-              className="relative -mb-px min-h-11 rounded-t-[var(--radius-control)] border-b-2 border-transparent px-3 font-semibold text-graphite transition-colors hover:text-ink data-[state=active]:border-accent data-[state=active]:text-ink"
+              className="text-graphite hover:text-ink data-[state=active]:border-accent data-[state=active]:text-ink relative -mb-px min-h-11 rounded-t-[var(--radius-control)] border-b-2 border-transparent px-3 font-semibold transition-colors"
             >
               {label}
             </Tabs.Trigger>
@@ -101,7 +107,7 @@ export function HeroCalculator() {
         </a>
       </div>
 
-      <div className="grid grid-1 md:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.15fr)]">
+      <div className="grid-1 grid md:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.15fr)]">
         {/* Inputs */}
         <div className="grid content-start gap-3 px-4 py-5 md:px-5">
           <Tabs.Content value="sip" className="grid gap-3 focus-visible:outline-none" tabIndex={-1}>
@@ -161,10 +167,10 @@ export function HeroCalculator() {
         </div>
 
         {/* Result */}
-        <div className="border-t border-rule px-4 py-5 md:border-t-0 md:border-l md:px-5">
+        <div className="border-rule border-t px-4 py-5 md:border-t-0 md:border-l md:px-5">
           {mode === "sip" ? (
             <>
-              <p className="text-[0.9375rem] text-graphite">In {years(sip.years)}, this could grow to</p>
+              <p className="text-graphite text-[0.9375rem]">In {years(sip.years)}, this could grow to</p>
               <p className="mt-1 text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-bold tracking-[-0.03em]">
                 <AnimatedNumber value={sipR.futureValue} format={formatINRShort} />
               </p>
@@ -177,30 +183,24 @@ export function HeroCalculator() {
                 </div>
                 <div>
                   <dt className="text-graphite">Growth</dt>
-                  <dd className="font-semibold text-gain">
+                  <dd className="text-gain font-semibold">
                     <AnimatedNumber value={sipR.gains} format={formatINRShort} />
                   </dd>
                 </div>
               </dl>
-              <Split
-                a={sipR.invested}
-                b={sipR.gains}
-                aLabel="Contributions"
-                bLabel="Growth"
-                bClass="bg-gain"
-              />
+              <Split a={sipR.invested} b={sipR.gains} aLabel="Contributions" bLabel="Growth" bClass="bg-gain" />
             </>
           ) : (
             <>
-              <p className="text-[0.9375rem] text-graphite">Your monthly EMI</p>
+              <p className="text-graphite text-[0.9375rem]">Your monthly EMI</p>
               <p className="mt-1 text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-bold tracking-[-0.03em]">
                 <AnimatedNumber value={emiR.emi} format={formatINR} />
               </p>
-              <p className="mt-0.5 text-note text-graphite">for {emiR.months} months</p>
+              <p className="text-note text-graphite mt-0.5">for {emiR.months} months</p>
               <dl className="mt-4 grid grid-cols-2 gap-3 text-[0.9375rem]">
                 <div>
                   <dt className="text-graphite">Total interest</dt>
-                  <dd className="font-semibold text-loss">
+                  <dd className="text-loss font-semibold">
                     <AnimatedNumber value={emiR.totalInterest} format={formatINRShort} />
                   </dd>
                 </div>
@@ -211,18 +211,12 @@ export function HeroCalculator() {
                   </dd>
                 </div>
               </dl>
-              <Split
-                a={emiR.principal}
-                b={emiR.totalInterest}
-                aLabel="Principal"
-                bLabel="Interest"
-                bClass="bg-loss"
-              />
+              <Split a={emiR.principal} b={emiR.totalInterest} aLabel="Principal" bLabel="Interest" bClass="bg-loss" />
             </>
           )}
           <button
             type="button"
-            className="mt-5 inline-flex min-h-11 items-center gap-2 font-semibold text-accent md:hidden"
+            className="text-accent mt-5 inline-flex min-h-11 items-center gap-2 font-semibold md:hidden"
             aria-expanded={showWorking}
             aria-controls={workingId}
             onClick={() => setShowWorking((v) => !v)}
@@ -244,9 +238,11 @@ export function HeroCalculator() {
         <section
           id={workingId}
           aria-label="Working"
-          className={`rough overflow-x-auto border-t border-rule md:col-span-2 md:block lg:col-span-1 lg:border-t-0 lg:border-l ${showWorking ? "block" : "hidden"}`}
+          className={`rough border-rule overflow-x-auto border-t md:col-span-2 md:block lg:col-span-1 lg:border-t-0 lg:border-l ${showWorking ? "block" : "hidden"}`}
         >
-          {mode === "sip" ? <SipWorking r={sipR} /> : <EmiWorking r={emiR} />}
+          <InteractedContext.Provider value={interacted}>
+            {mode === "sip" ? <SipWorking r={sipR} /> : <EmiWorking r={emiR} />}
+          </InteractedContext.Provider>
         </section>
       </div>
 

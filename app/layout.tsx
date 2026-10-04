@@ -2,12 +2,23 @@ import type { Metadata, Viewport } from "next";
 import { Noto_Sans_Devanagari, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 
+// Roman face: preloaded, and "optional" so the hero text paints once with the
+// metric-matched fallback instead of repainting on swap (LCP, zero CLS).
 const schibsted = Schibsted_Grotesk({
   subsets: ["latin"],
-  style: ["normal", "italic"],
+  style: "normal",
   variable: "--font-schibsted",
-  display: "swap",
+  display: "optional",
   adjustFontFallback: true,
+});
+
+// Italic face for margin annotations only — nothing above the fold needs it.
+const schibstedItalic = Schibsted_Grotesk({
+  subsets: ["latin"],
+  style: "italic",
+  variable: "--font-schibsted-italic",
+  display: "swap",
+  preload: false,
 });
 
 // Fallback for Hindi and Marathi titles; not preloaded, so English pages pay nothing.
@@ -51,7 +62,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-IN" className={`${schibsted.variable} ${devanagari.variable}`}>
+    <html lang="en-IN" className={`${schibsted.variable} ${schibstedItalic.variable} ${devanagari.variable}`}>
       <body>{children}</body>
     </html>
   );

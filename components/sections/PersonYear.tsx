@@ -37,11 +37,11 @@ const STEPS = [
 
 export function PersonYear() {
   return (
-    <section aria-labelledby="year-title" className="section border-t border-rule">
+    <section aria-labelledby="year-title" className="section border-rule border-t">
       <div className="wrap">
         <div className="prose-col">
           <h2 id="year-title">Understand. Act. Grow. One person&apos;s year.</h2>
-          <p className="mt-4 text-[1.0625rem] text-ink-soft">
+          <p className="text-ink-soft mt-4 text-[1.0625rem]">
             An example, not a customer story: Meera, 27, first job in Pune. Three decisions across one financial year,
             each worked out with one calculator.
           </p>
@@ -51,10 +51,10 @@ export function PersonYear() {
           {STEPS.map((s, i) => (
             <li
               key={s.stage}
-              className="relative grid gap-2 border-l-2 border-ink pl-5 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-6 md:border-l-0 md:pl-0"
+              className="border-ink relative grid gap-2 border-l-2 pl-5 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-6 md:border-l-0 md:pl-0"
               style={{ ["--step" as string]: i }}
             >
-              <div className="md:border-r md:border-rule md:pr-6 md:text-right">
+              <div className="md:border-rule md:border-r md:pr-6 md:text-right">
                 <p className="text-note text-graphite">{s.month}</p>
                 <p className="text-lead font-bold">{s.stage}</p>
               </div>
@@ -63,7 +63,7 @@ export function PersonYear() {
                 style={{ marginLeft: `calc(var(--step) * var(--indent, 0rem))` }}
               >
                 <h3 className="text-[1.25rem] leading-snug font-semibold">{s.question}</h3>
-                <p className="mt-2 text-ink-soft">{s.body}</p>
+                <p className="text-ink-soft mt-2">{s.body}</p>
                 <a href={s.href} className="link mt-3 inline-flex min-h-11 items-center font-semibold">
                   {s.cta}
                 </a>
@@ -72,8 +72,8 @@ export function PersonYear() {
           ))}
         </ol>
         <p className="rough-note mt-2">
-          The ₹20 lakh figure uses the SIP formula above, solved for the monthly amount: {GOAL_YEARS} years,{" "}
-          {GOAL_RATE}% a year assumed, compounded monthly. Illustrative only.
+          The ₹20 lakh figure uses the SIP formula above, solved for the monthly amount: {GOAL_YEARS} years, {GOAL_RATE}
+          % a year assumed, compounded monthly. Illustrative only.
         </p>
       </div>
     </section>

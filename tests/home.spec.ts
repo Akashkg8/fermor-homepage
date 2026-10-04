@@ -7,6 +7,19 @@ test("one h1 that says what Fermor is", async ({ page }) => {
   await expect(page.locator("h1")).toHaveText("Every money decision, worked out in the open.");
 });
 
+test("mobile menu opens, closes with Escape and returns focus", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "menu button is phone-only");
+  await page.goto("/");
+  const button = page.getByRole("button", { name: "Open menu" });
+  await button.click();
+  const dialog = page.getByRole("dialog", { name: "Menu" });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("link", { name: /Calculators/ })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(button).toBeFocused();
+});
+
 test("hero SIP calculator recomputes, and the rough work shows the same number", async ({ page, isMobile }) => {
   await page.goto("/");
   const field = page.getByRole("textbox", { name: "Monthly SIP" });
@@ -50,7 +63,17 @@ test("waitlist validates and confirms", async ({ page }) => {
 test("no banned phrases on the page", async ({ page }) => {
   await page.goto("/");
   const text = (await page.locator("body").innerText()).toLowerCase();
-  for (const banned of ["invest now", "guaranteed", "assured return", "best fund", "unlock", "supercharge", "seamless", "empower", "financial journey"]) {
+  for (const banned of [
+    "invest now",
+    "guaranteed",
+    "assured return",
+    "best fund",
+    "unlock",
+    "supercharge",
+    "seamless",
+    "empower",
+    "financial journey",
+  ]) {
     expect(text, banned).not.toContain(banned);
   }
 });
@@ -66,6 +89,8 @@ test("no horizontal page scroll", async ({ page }) => {
 
 test("axe: no WCAG 2.2 AA violations", async ({ page }) => {
   await page.goto("/");
-  const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
+  const results = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+    .analyze();
   expect(results.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`)).toEqual([]);
 });

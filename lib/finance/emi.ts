@@ -55,9 +55,7 @@ export function emi({ principal, annualRate, years }: EmiInput): EmiResult {
   const growthFactor = Math.pow(1 + monthlyRate, months);
   // At 0% the formula is 0/0; the loan is simply repaid in equal parts.
   const instalment =
-    monthlyRate === 0
-      ? principal / months
-      : (principal * monthlyRate * growthFactor) / (growthFactor - 1);
+    monthlyRate === 0 ? principal / months : (principal * monthlyRate * growthFactor) / (growthFactor - 1);
 
   const totalPayment = instalment * months;
 

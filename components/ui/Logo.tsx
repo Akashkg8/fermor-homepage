@@ -3,7 +3,7 @@ export function FermorMark({ size = 28 }: { size?: number }) {
   return (
     <span
       aria-hidden="true"
-      className="inline-grid shrink-0 place-items-center rounded-[5px] bg-ink"
+      className="bg-ink inline-grid shrink-0 place-items-center rounded-[5px]"
       style={{ width: size, height: size }}
     >
       <svg viewBox="-1.04 -0.79 2.08 1.58" width={size * 0.66} height={size * 0.5} fill="#75FB90">

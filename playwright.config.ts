@@ -17,8 +17,14 @@ export default defineConfig({
     ...(channel ? { channel } : {}),
   },
   projects: [
-    { name: "desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 800 }, ...(channel ? { channel } : {}) } },
-    { name: "mobile", use: { ...devices["Pixel 7"], viewport: { width: 375, height: 812 }, ...(channel ? { channel } : {}) } },
+    {
+      name: "desktop",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 800 }, ...(channel ? { channel } : {}) },
+    },
+    {
+      name: "mobile",
+      use: { ...devices["Pixel 7"], viewport: { width: 375, height: 812 }, ...(channel ? { channel } : {}) },
+    },
   ],
   webServer: {
     command: "npm run start -- -p 3100",

@@ -55,11 +55,11 @@ I rejected "See the math. Then decide." because its two clipped fragments read a
 
 **Reconciling with the real logo.** The mark (`fermor-mark-2026.svg`) is mint. Mint on chalk is about 1.3:1, so it cannot carry text or controls, and it would collide with the gain colour. It appears only on an ink tile, and ink-blue is the interface accent.
 
-**Type.** Schibsted Grotesk (variable, real italics) via `next/font` with a metric-matched fallback, so fonts cause no layout shift. Italic is used for margin annotations. Noto Sans Devanagari is a non-preloaded fallback for Hindi and Marathi titles.
+**Type.** Schibsted Grotesk (variable, real italics) via `next/font`. The roman face is preloaded with `display: optional` and a metric-matched fallback, so there is no swap repaint and no layout shift. The italic is a separate, non-preloaded face. Italic is used for margin annotations. Noto Sans Devanagari is a non-preloaded fallback for Hindi and Marathi titles.
 
 **Radii by hierarchy.** 0 for rules and the margin, 4px for controls, 6px for buttons, 10px for containers, and a pill only for the slider thumb and the app badge.
 
-**Motion.** There is one orchestrated moment. As a hero input changes, the result tweens and each substituted term in the derivation draws an underline in derivation order (P → i → n → result). Everything else moves only on user action: accordion, tabs. `prefers-reduced-motion` turns all of it off.
+**Motion.** There is one orchestrated moment. As a hero input changes, the result tweens (Motion, loaded on first interaction) and each substituted term in the derivation draws an underline in derivation order (P → i → n → result), using a CSS keyframe so the calculator doesn't ship Motion's component bundle for a 2px line. Nothing animates on load. Everything else moves only on user action: accordion, tabs. `prefers-reduced-motion` turns all of it off.
 
 ## What is real vs "coming to the app"
 
@@ -90,6 +90,7 @@ The preview panels use a fictional example household, and every number in them i
   - one h1;
   - the calculator recomputes, and the rough work shows the reference value;
   - keyboard tab switching;
+  - the mobile menu closes with Escape and returns focus;
   - invalid input is flagged;
   - the waitlist round trip;
   - a banned-phrase scan;
@@ -110,5 +111,22 @@ The preview panels use a fictional example household, and every number in them i
 - **Waitlist storage.** It needs `WAITLIST_WEBHOOK_URL`. The page is honest when it isn't set.
 - **Tabular figures.** These apply to figures (results, derivation terms, the animated numbers), not to body prose. Schibsted's `tnum` also widens commas and full stops, so separators are kept proportional with a `.sep` span.
 - **Dark mode.** There is no site-wide dark theme. The palette is designed as a single light system, with one deliberate dark section for the app.
-- **Lighthouse.** Not run in this environment: the browser download is blocked here, so tests use the system Chrome. The build is fully static except `/api/waitlist`, with no images, no client-side data fetching, and only the calculator, chart, nav, FAQ and form hydrated. Run `npx lighthouse http://localhost:3000 --preset=desktop` (and mobile) to verify the ≥95 target.
+- **Lighthouse (mobile, production build, local).**
+
+  | Category | Score |
+  |---|---|
+  | Accessibility | 100 |
+  | Best Practices | 100 |
+  | SEO | 100 |
+  | **Performance** | **91–93** (3 runs) |
+
+  - **Other metrics:** CLS 0 and TBT 30–80 ms. Unthrottled, the measured LCP is about 0.3s.
+  - **Why it misses the target.** Performance is **below the 95 target**. Lighthouse's simulated slow-4G LCP comes out at about 3.3s. It charges the hero text for the HTML (~51 KB including the inline React payload) and the React/Next runtime (~115 KB) that every Next.js App Router page loads.
+  - **Already done:**
+    - CSS inlined (`experimental.inlineCss`);
+    - roman font on `display: optional` with metric-matched fallback;
+    - italic face not preloaded;
+    - Motion loaded on first input change;
+    - mobile menu (Radix Dialog) loaded on first tap.
+  - **Next steps if 95 is a hard gate:** move the FAQ to native `<details>` to drop Radix Accordion, or measure on Vercel's edge, where TTFB and compression differ from `next start` on localhost.
 - **Critique pass.** I removed a duplicated exact-rupee line under the hero result (the rough work already shows it). I also fixed a mobile overflow that the first test missed, because an emulated phone zooms out to fit; the test now compares against the configured viewport.

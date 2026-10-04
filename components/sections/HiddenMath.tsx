@@ -44,11 +44,18 @@ function YearChart({ rate }: { rate: number }) {
   return (
     <figure className="mt-6">
       <div ref={wrapRef}>
-        <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} className="block h-auto w-full" role="img" aria-labelledby="hm-chart-title hm-chart-desc">
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          width={W}
+          height={H}
+          className="block h-auto w-full"
+          role="img"
+          aria-labelledby="hm-chart-title hm-chart-desc"
+        >
           <title id="hm-chart-title">Where each year&apos;s EMIs go</title>
           <desc id="hm-chart-desc">
-            In year 1 of a {formatTrimmed(rate, 2)}% loan, {formatINR(first.interestPaid)} of the{" "}
-            {formatINR(yearTotal)} paid goes to interest and {formatINR(first.principalPaid)} reduces the loan.
+            In year 1 of a {formatTrimmed(rate, 2)}% loan, {formatINR(first.interestPaid)} of the {formatINR(yearTotal)}{" "}
+            paid goes to interest and {formatINR(first.principalPaid)} reduces the loan.
             {crossover
               ? ` Principal overtakes interest only in year ${crossover.year}.`
               : " Interest stays larger than principal for the whole term."}
@@ -84,7 +91,14 @@ function YearChart({ rate }: { rate: number }) {
           </text>
           {crossover && (
             <g>
-              <line x1={crossX} x2={crossX} y1={18} y2={top + plotH} stroke="var(--color-graphite)" strokeDasharray="3 3" />
+              <line
+                x1={crossX}
+                x2={crossX}
+                y1={18}
+                y2={top + plotH}
+                stroke="var(--color-graphite)"
+                strokeDasharray="3 3"
+              />
               <text
                 x={crossX + (crossRight ? -6 : 6)}
                 y={14}
@@ -102,8 +116,8 @@ function YearChart({ rate }: { rate: number }) {
         </svg>
       </div>
       <figcaption className="rough-note mt-2">
-        Each column is one year of EMIs ({formatINR(yearTotal)}). ₹50 lakh over 20 years at {formatTrimmed(rate, 2)}%
-        a year, monthly rests, rate fixed for the full term, no prepayment. Illustrative.
+        Each column is one year of EMIs ({formatINR(yearTotal)}). ₹50 lakh over 20 years at {formatTrimmed(rate, 2)}% a
+        year, monthly rests, rate fixed for the full term, no prepayment. Illustrative.
       </figcaption>
     </figure>
   );
@@ -115,19 +129,19 @@ export function HiddenMath() {
   const interestShare = r.totalInterest / r.principal;
 
   return (
-    <section aria-labelledby="hidden-title" className="section border-t border-rule">
-      <div className="wrap grid grid-1 gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+    <section aria-labelledby="hidden-title" className="section border-rule border-t">
+      <div className="wrap grid-1 grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         <div className="prose-col">
           <h2 id="hidden-title">Why the math gets hidden</h2>
-          <div className="mt-5 grid gap-4 text-[1.0625rem] text-ink-soft">
+          <div className="text-ink-soft mt-5 grid gap-4 text-[1.0625rem]">
             <p>
-              A loan is sold on its monthly figure. A fund is sold on its best year. The number that decides whether
-              it was a good deal, the total, is usually in a table you are not shown.
+              A loan is sold on its monthly figure. A fund is sold on its best year. The number that decides whether it
+              was a good deal, the total, is usually in a table you are not shown.
             </p>
             <p>
-              That is not always deliberate. Totals are large and uncomfortable, and an EMI fits on a banner. But
-              when you only see the monthly figure, it is hard to compare a lower rate against a shorter tenure, or
-              to see what prepaying would save.
+              That is not always deliberate. Totals are large and uncomfortable, and an EMI fits on a banner. But when
+              you only see the monthly figure, it is hard to compare a lower rate against a shorter tenure, or to see
+              what prepaying would save.
             </p>
             <p>So Fermor puts the total next to the instalment, every time. Here is a common one.</p>
           </div>
@@ -140,12 +154,9 @@ export function HiddenMath() {
               <p className="mt-2 text-[clamp(1.5rem,3vw,2rem)] leading-tight font-bold tracking-[-0.02em]">
                 EMI <Num>{formatINR(r.emi)}</Num>
               </p>
-              <p className="mt-1 text-lead">
+              <p className="text-lead mt-1">
                 Interest paid: <strong className="text-loss">{formatINRShort(r.totalInterest)}</strong>
-                <span className="text-graphite">
-                  {" "}
-                  ({formatTrimmed(interestShare * 100, 0)}% of what you borrowed)
-                </span>
+                <span className="text-graphite"> ({formatTrimmed(interestShare * 100, 0)}% of what you borrowed)</span>
               </p>
             </div>
             <div className="w-full sm:w-64">
