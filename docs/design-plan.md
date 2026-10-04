@@ -1,4 +1,4 @@
-# Checkpoint 1 — plan (awaiting approval)
+# Design plan
 
 > Assignment concept. Not an official Fermor site.
 
