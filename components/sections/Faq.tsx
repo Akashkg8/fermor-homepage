@@ -6,7 +6,7 @@ import { FAQS } from "@/content/faq";
 export function Faq() {
   return (
     <section aria-labelledby="faq-title" className="section border-t border-rule">
-      <div className="wrap grid gap-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
+      <div className="wrap grid grid-1 gap-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
         <h2 id="faq-title">Questions people ask first</h2>
         <Accordion.Root type="single" collapsible className="ruled border-y border-rule">
           {FAQS.map((f, i) => (

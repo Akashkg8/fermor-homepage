@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
+import { Num } from "@/components/ui/Num";
 
 interface Props {
   /** Changing the value re-keys the span, which replays the mark. */
@@ -19,7 +20,7 @@ interface Props {
  */
 export function Term({ value, order = 0, strong = false, children }: Props) {
   const reduce = useReducedMotion();
-  const content = children ?? value;
+  const content = children ?? <Num>{value}</Num>;
   const cls = `relative inline-block whitespace-nowrap ${strong ? "font-bold" : "font-semibold"}`;
 
   if (reduce) return <span className={cls}>{content}</span>;

@@ -5,7 +5,7 @@ const FACTS = ["Free to use", "No sign-up", "Every formula shown"];
 export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="wrap pt-8 pb-16 md:pt-14 lg:pb-24">
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end lg:gap-12">
+      <div className="grid grid-1 gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end lg:gap-12">
         <h1
           id="hero-title"
           className="text-[clamp(2.25rem,5.2vw,3.75rem)] leading-[1.04] font-bold tracking-[-0.035em]"

@@ -68,13 +68,11 @@ function GoalChart() {
       {goalPath.map((v, i) => (
         <circle key={i} cx={x(i)} cy={y(v)} r="2.5" fill="var(--color-on-ink)" />
       ))}
-      {goalPath.map((_, i) =>
-        i % 1 === 0 ? (
-          <text key={`t${i}`} x={x(i)} y={H - 4} fontSize="10" textAnchor={i === 0 ? "start" : i === EX.goalYears ? "end" : "middle"} fill="var(--color-on-ink-muted)">
-            {i === 0 ? "now" : `yr ${i}`}
-          </text>
-        ) : null,
-      )}
+      {goalPath.map((_, i) => (
+        <text key={`t${i}`} x={x(i)} y={H - 4} fontSize="10" textAnchor={i === 0 ? "start" : i === EX.goalYears ? "end" : "middle"} fill="var(--color-on-ink-muted)">
+          {i === 0 ? "now" : `yr ${i}`}
+        </text>
+      ))}
     </svg>
   );
 }
@@ -85,7 +83,7 @@ export function AppPreview() {
   return (
     <section id="app" aria-labelledby="app-title" className="on-ink section bg-ink text-on-ink">
       <div className="wrap">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+        <div className="grid grid-1 gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
           <div>
             <ComingBadge className="text-on-ink-muted" />
             <h2 id="app-title" className="mt-4 text-paper">
@@ -101,7 +99,7 @@ export function AppPreview() {
             </div>
           </div>
 
-          <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 lg:mx-0 lg:grid lg:grid-cols-2 lg:overflow-visible lg:px-0" role="group" aria-label="Previews of app features, with example data">
+          <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 lg:mx-0 lg:grid lg:grid-cols-2 lg:overflow-visible lg:px-0" tabIndex={0} role="group" aria-label="Previews of app features, with example data">
             <Panel title="Ask">
               <p className="rounded-[var(--radius-control)] bg-[#26375a] px-3 py-2 text-[0.9375rem]">
                 Can I afford a {formatINR(EX.emiAsked)} EMI?

@@ -79,7 +79,8 @@ export function NumberField({
             inputMode="decimal"
             autoComplete="off"
             spellCheck={false}
-            className={`num-input ${prefix ? "pl-6" : ""} ${suffix ? "pr-11" : ""}`}
+            className={`num-input ${prefix ? "pl-6" : ""}`}
+            style={suffix ? { paddingRight: `calc(${suffix.length}ch + 1rem)` } : undefined}
             value={text}
             aria-invalid={error || undefined}
             aria-describedby={error ? errorId : undefined}

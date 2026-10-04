@@ -101,7 +101,7 @@ export function HeroCalculator() {
         </a>
       </div>
 
-      <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.15fr)]">
+      <div className="grid grid-1 md:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.15fr)]">
         {/* Inputs */}
         <div className="grid content-start gap-3 px-4 py-5 md:px-5">
           <Tabs.Content value="sip" className="grid gap-3 focus-visible:outline-none" tabIndex={-1}>
@@ -161,15 +161,12 @@ export function HeroCalculator() {
         </div>
 
         {/* Result */}
-        <div className="border-t border-rule px-4 py-5 md:px-5 lg:border-t-0 lg:border-l">
+        <div className="border-t border-rule px-4 py-5 md:border-t-0 md:border-l md:px-5">
           {mode === "sip" ? (
             <>
               <p className="text-[0.9375rem] text-graphite">In {years(sip.years)}, this could grow to</p>
               <p className="mt-1 text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-bold tracking-[-0.03em]">
                 <AnimatedNumber value={sipR.futureValue} format={formatINRShort} />
-              </p>
-              <p className="mt-0.5 text-note text-graphite">
-                <AnimatedNumber value={sipR.futureValue} format={formatINR} />
               </p>
               <dl className="mt-4 grid grid-cols-2 gap-3 text-[0.9375rem]">
                 <div>
@@ -225,7 +222,7 @@ export function HeroCalculator() {
           )}
           <button
             type="button"
-            className="mt-5 inline-flex min-h-11 items-center gap-2 font-semibold text-accent lg:hidden"
+            className="mt-5 inline-flex min-h-11 items-center gap-2 font-semibold text-accent md:hidden"
             aria-expanded={showWorking}
             aria-controls={workingId}
             onClick={() => setShowWorking((v) => !v)}
@@ -247,7 +244,7 @@ export function HeroCalculator() {
         <section
           id={workingId}
           aria-label="Working"
-          className={`rough overflow-x-auto border-t border-rule lg:block lg:border-t-0 lg:border-l ${showWorking ? "block" : "hidden"}`}
+          className={`rough overflow-x-auto border-t border-rule md:col-span-2 md:block lg:col-span-1 lg:border-t-0 lg:border-l ${showWorking ? "block" : "hidden"}`}
         >
           {mode === "sip" ? <SipWorking r={sipR} /> : <EmiWorking r={emiR} />}
         </section>

@@ -8,7 +8,7 @@ const check = emi({ principal: 10_00_000, annualRate: 10, years: 20 });
 export function Methodology() {
   return (
     <section aria-labelledby="method-title" className="section border-t border-rule">
-      <div className="wrap grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+      <div className="wrap grid grid-1 gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         <div className="prose-col">
           <h2 id="method-title">Every formula, every assumption</h2>
           <p className="mt-5 text-[1.0625rem] text-ink-soft">

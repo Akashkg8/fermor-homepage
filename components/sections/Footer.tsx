@@ -5,7 +5,7 @@ import { Logo } from "@/components/ui/Logo";
 export function FinalCta() {
   return (
     <section aria-labelledby="final-title" className="section border-t border-rule">
-      <div className="wrap grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+      <div className="wrap grid grid-1 gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
         <div className="prose-col">
           <h2 id="final-title">Work one decision out now.</h2>
           <p className="mt-3 text-[1.0625rem] text-ink-soft">

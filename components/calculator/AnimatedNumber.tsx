@@ -1,7 +1,8 @@
 "use client";
 
 import { animate, useReducedMotion } from "motion/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { numHTML } from "@/components/ui/Num";
 
 interface Props {
   value: number;
@@ -10,11 +11,11 @@ interface Props {
 }
 
 /**
- * Tweens between values as an input changes. The DOM text is written
- * directly so a drag does not re-render the tree on every frame. Server and
- * first paint show the exact final figure.
+ * Tweens between values as an input changes. The DOM is written directly so
+ * a drag does not re-render the tree on every frame. Server render and first
+ * paint show the exact final figure.
  */
-export function AnimatedNumber({ value, format, className }: Props) {
+export function AnimatedNumber({ value, format, className = "" }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
   const shown = useRef(value);
   const reduce = useReducedMotion();
@@ -22,9 +23,9 @@ export function AnimatedNumber({ value, format, className }: Props) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (reduce) {
+    if (reduce || shown.current === value) {
       shown.current = value;
-      el.textContent = format(value);
+      el.innerHTML = numHTML(format(value));
       return;
     }
     const controls = animate(shown.current, value, {
@@ -32,15 +33,18 @@ export function AnimatedNumber({ value, format, className }: Props) {
       ease: [0.2, 0.7, 0.2, 1],
       onUpdate: (v) => {
         shown.current = v;
-        el.textContent = format(v);
+        el.innerHTML = numHTML(format(v));
+      },
+      onComplete: () => {
+        el.innerHTML = numHTML(format(value));
       },
     });
     return () => controls.stop();
   }, [value, format, reduce]);
 
-  return (
-    <span ref={ref} className={className}>
-      {format(value)}
-    </span>
-  );
+  // Rendered once; afterwards the effect owns this node's contents, so React
+  // never reconciles children that the animation has replaced.
+  const [initial] = useState(() => ({ __html: numHTML(format(value)) }));
+
+  return <span ref={ref} className={`tnum ${className}`} dangerouslySetInnerHTML={initial} />;
 }
